@@ -1,4 +1,8 @@
-<?php namespace App\Http\Controllers;
+<?php 
+
+namespace App\Http\Controllers;
+
+use DB;
 
 class HomeController extends Controller {
 
@@ -20,7 +24,7 @@ class HomeController extends Controller {
 	 */
 	public function __construct()
 	{
-		$this->middleware('auth');
+		//$this->middleware('auth');
 	}
 
 	/**
@@ -30,7 +34,14 @@ class HomeController extends Controller {
 	 */
 	public function index()
 	{
-		return view('home');
+            $inscritos = DB::select (DB::raw('SELECT  count(*) inscritos, s.course_id, course_name
+                                            FROM student_courseenrollment s 
+                                            LEFT JOIN course_name c ON s.course_id = c.course_id
+                                            where is_active = 1 
+                                            Group by s.course_id, course_name;'));
+            return view('home')->with ('inscritos', collect($inscritos));
 	}
+        
+        
 
 }
