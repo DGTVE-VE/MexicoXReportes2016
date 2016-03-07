@@ -16,7 +16,8 @@
 	<!--[if lt IE 9]>
 		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
 		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-	<![endif]-->
+			<![endif]-->
+	
 </head>
 <body>
 	<nav class="navbar navbar-default">
@@ -33,7 +34,14 @@
 
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li><a href="{{ url('/') }}">Home</a></li>
+					<li><a href="{{ url('/') }}" class="bg-danger">Home</a></li>
+                    <li><a href="cursos" class="bg-danger">Estadisticas Cursos</a></li>
+                    <li><a href="totales" class="bg-danger">Registrados en la plataforma</a></li>
+					<li><a href="edad" class="bg-danger">Por edades</a></li>
+					<li><a href="genero" class="bg-danger">Por genero</a></li>
+					<li><a href="nivel" class="bg-danger">Por Nivel de Estudios</a></li>
+					<li><a href="geo" class="bg-danger">Por Entidad Federativa</a></li>
+
 				</ul>
 				
 			</div>

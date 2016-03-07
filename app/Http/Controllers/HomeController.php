@@ -34,14 +34,64 @@ class HomeController extends Controller {
 	 */
 	public function index()
 	{
-            $inscritos = DB::select (DB::raw('SELECT  count(*) inscritos, s.course_id, course_name
-                                            FROM student_courseenrollment s 
-                                            LEFT JOIN course_name c ON s.course_id = c.course_id
-                                            where is_active = 1 
-                                            Group by s.course_id, course_name;'));
+        $inscritos = DB::select (DB::raw('SELECT  count(*) inscritos, s.course_id, course_name
+                                            FROM student_courseenrollment s LEFT JOIN course_name c ON s.course_id = c.course_id
+                                            where is_active = 1 Group by s.course_id, course_name;'));
+            
+        #$activos = DB::select(DB::raw('SELECT * FROM course_name WHERE CURDATE() <= fin AND CURDATE() >= inicio'));
+        #$no_activos = DB::select(DB::raw('SELECT * FROM course_name WHERE CURDATE() < inicio'));
+        #$concluido = DB::select(DB::raw('SELECT * FROM course_name WHERE CURDATE() > fin'));
+        
+        #print_r($inscritos[0]);
+        #print_r($inscritos);
+        #print_r($activos);
+        #print_r($concluido);
+        #print_r($no_activos);
+        #$act = $activos[0] -> total;
+        #$no_act = $no_activos[0] -> total;
+        
+        #$course = array($act, $no_act);
+        
             return view('home')->with ('inscritos', collect($inscritos));
 	}
+    
+    public function cursos(){
+        HomeController::cursoa();
+        HomeController::curson();
+        HomeController::cursoc();
+        #HomeController::index();
         
+        return view('cursos');
+    }
+    
+    public function cursoa(){
+        
+        $activos = DB::select(DB::raw('SELECT * FROM course_name WHERE CURDATE() <= fin AND CURDATE() >= inicio'));
+        
+        #print_r($activos);
+
+        return view('cursoa') -> with ('activos', collect($activos));
+        
+    }
+    public function curson(){
+
+        $no_activos = DB::select(DB::raw('SELECT * FROM course_name WHERE CURDATE() < inicio'));
+        
+        #print_r($no_activos);
+        
+        return view('curson') -> with ('no_activos', collect($no_activos));
+        
+    }
+    
+    public function cursoc(){
+        
+        $concluido = DB::select(DB::raw('SELECT * FROM course_name WHERE CURDATE() > fin'));
+        
+        #print_r($concluido);
+
+        return view('cursoc') -> with ('concluido', collect($concluido));
+        
+    }
         
 
 }
