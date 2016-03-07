@@ -10,7 +10,7 @@
         var data = google.visualization.arrayToDataTable([
             
  
-            ['', 'Doctorado = {{$estudio[0]}}', 'Maestria = {{$estudio[1]}}', 'Tecnico = {{$estudio[2]}}', 'Licenciatura = {{$estudio[3]}}', 'Bachillerato = {{$estudio[4]}}', 'Secundaria = {{$estudio[5]}}', 'Primaria = {{$estudio[6]}}', 'Ninguno = {{$estudio[7]}}', 'Otros = {{$estudio[8]}}', 'No especificado = {{$estudio[9]}}', 'Doctorado en Ciencias o Ingeniería = {{$estudio[10]}}', 'Doctorado en otra área = {{$estudio[11]}}', 'Nada = {{$estudio[12]}}'],
+            ['', 'Doctorado = {{$estudio[0]}}', 'Maestria = {{$estudio[1]}}', 'Técnico Superior = {{$estudio[2]}}', 'Licenciatura = {{$estudio[3]}}', 'Bachillerato = {{$estudio[4]}}', 'Secundaria = {{$estudio[5]}}', 'Primaria = {{$estudio[6]}}', 'Ninguno = {{$estudio[7]}}', 'Otros = {{$estudio[8]}}', 'No especificado = {{$estudio[9]}}', 'Doctorado en Ciencias o Ingeniería = {{$estudio[10]}}', 'Doctorado en otra área = {{$estudio[11]}}', 'Nada = {{$estudio[12]}}'],
             ['Grado',{{$estudio[0]}}, {{$estudio[1]}}, {{$estudio[2]}}, {{$estudio[3]}}, {{$estudio[4]}}, {{$estudio[5]}}, {{$estudio[6]}}, {{$estudio[7]}},  {{$estudio[8]}}, {{$estudio[9]}}, {{$estudio[10]}}, {{$estudio[11]}}, {{$estudio[12]}}
                                                          ]]);
             
