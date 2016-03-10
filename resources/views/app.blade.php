@@ -41,7 +41,7 @@
 					<li><a href="genero" class="bg-danger">Por genero</a></li>
 					<li><a href="nivel" class="bg-danger">Por Nivel de Estudios</a></li>
 					<li><a href="geo" class="bg-danger">Por Entidad Federativa</a></li>
-
+                    <li><a href="desercion" class="bg-danger">Deserción por curso</a></li>
 				</ul>
 				
 			</div>

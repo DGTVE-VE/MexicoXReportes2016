@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use DB;
+use Illuminate\Http\Request;
+
 
 class UseController extends Controller {
 
@@ -11,23 +13,50 @@ class UseController extends Controller {
 	{
         
 	}
+    
+    public function inscritos()
+	{
+        $inscritos = DB::select (DB::raw('SELECT * FROM vm_inscritos_x_curso;'));
+            
+        
+         return view('home')->with ('inscritos', collect($inscritos));
+	}
+    
+    public function cursos(){
+        UseController::cursoa();
+        UseController::curson();
+        UseController::cursoc();
+
+        return view('cursos');
+    }
+    
+    public function cursoa(){
+        
+        $activos = DB::select(DB::raw('SELECT * FROM course_name WHERE CURDATE() <= fin AND CURDATE() >= inicio'));
+
+        return view('cursoa') -> with ('activos', collect($activos));
+        
+    }
+    public function curson(){
+
+        $no_activos = DB::select(DB::raw('SELECT * FROM course_name WHERE CURDATE() < inicio'));
+        
+        return view('curson') -> with ('no_activos', collect($no_activos));
+        
+    }
+    
+    public function cursoc(){
+        
+        $concluido = DB::select(DB::raw('SELECT * FROM course_name WHERE CURDATE() > fin'));
+
+        return view('cursoc') -> with ('concluido', collect($concluido));
+        
+    }
+    
     public function index()
     {
         return view('menu');
     }
-
-	public function index1()
-	{
-        $inscritos = DB::select (DB::raw('SELECT  count(*) inscritos, s.course_id, course_name
-                                            FROM student_courseenrollment s 
-                                            LEFT JOIN course_name c ON s.course_id = c.course_id
-                                            where is_active = 1 
-                                            Group by s.course_id, course_name;'));
-           
-        $totales = DB::select ('SELECT count(id) FROM auth_user;');
-        
-        return view('home1') -> with ('inscritos', collect($inscritos));
-	}
     
     public function totales()
 	{
@@ -42,15 +71,7 @@ class UseController extends Controller {
         
         $info = array($t, $n, $a); 
             
-        #print_r($t =$totales[0] -> total);
-        #echo nl2br("\n");
-        #print_r($no_activos[0] -> total);
-        #echo nl2br("\n");
-        #print_r($activos[0] -> total);
-        #echo nl2br("\n");
-        #print_r($info);
-
-        return view('totales') -> with ('info', collect($info));
+        return view('usuarios/totales') -> with ('info', collect($info));
            
 	}
     
@@ -67,7 +88,7 @@ class UseController extends Controller {
         
         $infot = array($f, $m, $n); 
 
-        return view('genero') -> with ('infot', collect($infot));
+        return view('usuarios/genero') -> with ('infot', collect($infot));
            
 	}
     
@@ -84,7 +105,6 @@ class UseController extends Controller {
         $edad45_50 = DB::select (DB::raw('SELECT count(id) as total FROM auth_userprofile WHERE year(now()) - year_of_birth <=50 and year(now()) - year_of_birth >40;'));
         $edad50 = DB::select (DB::raw('SELECT count(id) as total FROM auth_userprofile WHERE year(now()) - year_of_birth >50;'));
         
-        
         $e0 = $edad15[0] -> total;
         $e1 = $edad15_20[0] -> total;
         $e2 = $edad20_25[0] -> total;
@@ -97,7 +117,7 @@ class UseController extends Controller {
         
         $edad = array($e0,$e1,$e2,$e3,$e4,$e5,$e6,$e7,$e8); 
           
-        return view('edades') -> with ('edad', collect($edad));
+        return view('usuarios/edades') -> with ('edad', collect($edad));
            
 	}
     
@@ -133,10 +153,8 @@ class UseController extends Controller {
         $na = $nada[0] -> total;
          
         $estudio = array($d, $m, $t, $l, $p, $s, $pr, $n, $o, $ne, $dc, $do, $na); 
-            
-        #print_r($estudio);
 
-        return view('nivel') -> with ('estudio', collect($estudio));
+        return view('usuarios/nivel') -> with ('estudio', collect($estudio));
            
 	}
     
@@ -241,15 +259,30 @@ class UseController extends Controller {
         $ex = DB::select(DB::raw('SELECT COUNT(id) as total FROM auth_userprofile WHERE country = "EX";'));
         $EX = $ex[0] -> total;
         
-  
+    $total = $AG + $BC + $BS + $CC + $CS + $CH + $CL + $CM + $DF + $DG + $GT + $GR + $HG + $JC + $MC + $MN + $MS + $NT + $NL + $OC + $PL + $QT + $QR + $SP + $SL + $SR + $TC + $TS + $TL + $VZ + $YN + $ZS + $EX;
         
-        $geo = array($AG, $BC, $BS, $CC, $CS, $CH, $CL, $CM, $DF, $DG, $GT, $GR, $HG, $JC, $MC, $MN, $MS, $NT, $NL, $OC, $PL, $QT, $QR, $SP, $SL, $SR, $TC, $TS, $TL, $VZ, $YN, $ZS, $EX);
+        $geo = array($AG, $BC, $BS, $CC, $CS, $CH, $CL, $CM, $DF, $DG, $GT, $GR, $HG, $JC, $MC, $MN, $MS, $NT, $NL, $OC, $PL, $QT, $QR, $SP, $SL, $SR, $TC, $TS, $TL, $VZ, $YN, $ZS, $EX, $total);
         
-        return view('geo') -> with('geo', collect($geo));
+        return view('usuarios/geo') -> with('geo', collect($geo));
     }
     
-    
+    public function desercion()
+    {
         
+        
+        $correo = "jorgeomarmh";
+        
+        $curso="Demencia";
+        
+        $desercion = DB::table('vm_desercion')->wherecourse_name($curso)->get();
+        
+        #print_r($desercion);
+        
+        $json = json_encode ($desercion);
+
+        return view('usuarios/desercion') -> with('desercion', $json);
+        
+    }
         
 
 }

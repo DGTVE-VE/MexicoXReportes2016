@@ -110,15 +110,9 @@
          <tr><td>Yucatán</td><td>{{$geo[30]}}</td></tr>
          <tr><td>Zacatecas</td><td>{{$geo[31]}}</td></tr>
          <tr><td>Extranjeros</td><td>{{$geo[32]}}</td></tr>
-         
-         <?php
-         $total=0;
-         for($i=0; $i<=32; $i++){
-            $total = $total+$geo[$i];
-         }
-         ?>
+
    
-         <tr class="success"><td>Total de usuarios registrados con Entidad Federativa:</td><td>{{$total}}</td></tr>
+         <tr class="success"><td>Total de usuarios registrados con Entidad Federativa:</td><td>{{$geo[33]}}</td></tr>
          
         </table>
         
